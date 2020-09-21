@@ -1,0 +1,11 @@
+@media (min-width: 768px){
+.navbar .dropdown-menu{
+        opacity: 1 !important;
+        //z-index: 999 !important;
+    }
+}
+
+.navbar .dropdown-menu{
+  opacity: 1 !important;
+  z-index: auto !important;
+}

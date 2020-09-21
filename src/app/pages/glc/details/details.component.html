@@ -1,0 +1,209 @@
+<div class="header bg-gradient-danger pb-8 pt-6">
+  <div class="container-fluid">
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="col-md-12">
+              <label class="badge badge-info mr-2" *ngIf="data">GLC-{{data.referenceNo}}</label>
+            <b>Background Search GLC</b>
+
+
+            <span class="float-right"><a class="btn btn-link text-primary" href="#/glc/pending"
+                router-link="/glc/pending">
+                << Back To Pending GLC's</a> </span>
+              </div>
+              <div class="clearfix">
+          </div>
+          <!-- Person Information header -->
+          <div class="row" *ngIf="data">
+            <div class="col-md-12">
+              <div class="person-brief-container d-flex align-items-center">
+                <div class="person-avatar mr-4">
+                  <ngx-avatar name="{{data.person.firstName + ' ' + data.person.lastName}}" size="100" class="mr-2">
+                  </ngx-avatar>
+                </div>
+                <div class="personal-info flex-grow-1">
+                  <div class="name">
+                    <h3>{{data.person.firstName + ' ' + data.person.lastName}}</h3>
+                  </div>
+                  <span class="d-block text-sm">{{ data.person.gender | titlecase }}, DOB:
+                    {{data.person.dob | date: 'dd MMM y'}}</span>
+                  <span class="d-block text-sm">Email: {{data.person.email}}, Phone: {{data.person.phone}}</span>
+                  <div class="social-media mt-3">
+                    <div class="mr-2 d-inline-block"><a href="{{data.person.website}}" target="_blank"><i
+                          style="font-size: 20px;" class="fas fa-globe"></i></a>
+                    </div>
+                    <div class="mr-2 d-inline-block"><a href="{{data.person.facebook}}" target="_blank">
+                        <i style="font-size: 20px;" class="fab fa-facebook-square"></i></a></div>
+                    <div class="mr-2 d-inline-block"><a href="{{data.person.twitter}}" target="_blank"><i
+                          style="font-size: 20px;" class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="mr-2 d-inline-block"><a href="{{data.person.linkedin}}" target="_blank"><i
+                          style="font-size: 20px;" class="fab fa-linkedin"></i></a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="address-info d-flex">
+                  <div class="physical address text-sm mr-4">
+                    <div class="font-weight-bold text-muted">Physical address:</div>
+                    <small>
+                      {{data.person.physicalAddress.line1}}, {{data.person.physicalAddress.line2}} <br />
+                      {{data.person.physicalAddress.city}},
+                      {{data.person.physicalAddress.state}}<br />
+                      {{data.person.physicalAddress.zipcode}}</small>
+
+                  </div>
+                  <div class="mailing address text-sm mr-2">
+                    <div class="font-weight-bold text-muted">Mailing address:</div>
+                    <small>
+                      {{data.person.mailingAddress.line1 || data.person.physicalAddress.line1}},
+                      {{data.person.mailingAddress.line2 || data.person.physicalAddress.line2}}<br />
+                      {{data.person.mailingAddress.city  || data.person.physicalAddress.city}},
+                      {{data.person.mailingAddress.state || data.person.physicalAddress.state}} <br />
+                      {{data.person.mailingAddress.zipcode || data.person.physicalAddress.zipcode}}
+                    </small>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-8">
+      <div class="card bg-secondary shadow">
+        <!-- Card header -->
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-6">
+              <!-- Title -->
+              <h5 class="h3 mb-0">GLC Details
+
+              </h5>
+            </div>
+            <div class="col-6 text-right" *ngIf="glcDate">
+              <span class="text-sm text-muted">Requested on {{glcDate | date: 'dd MMM y, h:mm a'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card body -->
+        <div class="card-body">
+
+          <form [formGroup]="glcForm" (ngSubmit)="updateGLC()">
+            <div class="form-group">
+              <label>Transaction notes</label>
+              <textarea class="form-control" placeholder="Write a message here" rows="4" value=""
+                formControlName="remark" (blur)="logValidationErrors()"
+                [ngClass]="{'is-invalid':formError.remark}"></textarea>
+              <small class="help-block" [ngClass]="{ 'text-danger' : formError.remark }" *ngIf="(formError.remark)">
+                {{formError.remark}} </small>
+
+            </div>
+
+            <div class="row d-flex align-items-center">
+
+              <div class="col-12 form-group">
+                <label>Proof file</label>
+                <input type="file" class="form-control" formControlName="file"
+                  [ngClass]="{'is-invalid':formError.file}" (change)="onFileUpload($event.target.files)">
+                <small class="help-block" [ngClass]="{ 'text-danger' : formError.file }" *ngIf="(formError.file)">
+                  {{formError.file}} </small>
+
+                <div class="badge badge-info mt-3" *ngIf="uploading"><i class="fas fa-circle-notch fa-spin"></i>
+                  Uploading</div>
+                <div class="documents-uploaded mt-3" *ngIf="documents.length>0">
+
+                  <div class="btn-group mr-3 mt-2 " role="group" aria-label="Basic example"
+                    *ngFor="let doc of documents, index as i">
+                    <a href="{{doc.file}}" target="_blank" class="btn btn-sm btn-neutral">{{doc.name}}</a>
+                    <a class="btn btn-sm btn-neutral" (click)="removeUploadedFile(i)">
+                      <i class="fas fa-times"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="card-footer">
+            <app-button [btnType]="'submit'" (click)="updateGLC()" [loading]="loading1">
+                Update GLC
+              </app-button>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-secondary shadow">
+        <!-- Card header -->
+        <div class="card-header">
+          <h5 class="h3 mb-0">Status:
+            <span class="text-primary text-sm font-weight-bold" *ngIf="data?.status=='Pending'">
+              <i class="far fa-clock"></i> Pending</span>
+            <span class="text-warning text-sm font-weight-bold" *ngIf="data?.status=='In-Review'">
+              <i class="fas fa-search"></i> In-Review</span>
+            <span class="text-success text-sm font-weight-bold" *ngIf="data?.status=='Completed'">
+              <i class="far fa-check-circle"></i> Completed</span>
+          </h5>
+        </div>
+        <!-- Card body -->
+        <div class="card-body">
+          <form [formGroup]="updateStatus" (ngSubmit)="onStatusUpdate()">
+            <p class="card-text mb-4">
+              <small>All status updates will be sent to the customer.</small>
+            </p>
+            <!-- <p class="mb-3 card-text">
+              Current Status :
+              <span class="text-primary text-sm font-weight-bold" *ngIf="">
+                <i class="far fa-clock"></i>
+                {{data.status}}
+              </span>
+              <span class="text-primary text-sm font-weight-bold" *ngIf="">
+                <i class="far fa-clock"></i>
+                Pending
+              </span>
+              <span class="text-primary text-sm font-weight-bold" *ngIf="">
+                <i class="far fa-clock"></i>
+                Pending
+              </span>
+            </p> -->
+
+            <div class="d-flex">
+              <div class="custom-control custom-radio mr-3">
+                <input formControlName="status" class="custom-control-input" type="radio" id="InReview"
+                  value="In-Review" checked>
+                <label class="custom-control-label" for="InReview">In-Review</label>
+              </div>
+
+              <div class="custom-control custom-radio">
+                <input formControlName="status" class="custom-control-input" type="radio" id="Completed"
+                  value="Completed">
+                <label class="custom-control-label" for="Completed">Completed</label>
+              </div>
+            </div>
+            <small class="text-danger text-center" [hidden]='errorMessage'> Please select updated status.</small>
+
+          </form>
+        </div>
+        <!-- Card footer -->
+        <div class="card-footer">
+            <app-button [btnType]="'submit'" (click)="onStatusUpdate()" [loading]="loading2">
+                Update GLC
+              </app-button>
+          <!-- <button type="submit" class="btn btn-primary" (click)="onStatusUpdate()">Submit</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

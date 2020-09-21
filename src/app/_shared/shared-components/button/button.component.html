@@ -1,0 +1,7 @@
+<button class="btn {{btnClass}}" [type]="type" [disabled]="loading" [ngClass]="{loading: loading}">
+    <i class="fas fa-circle-notch fa-spin" *ngIf="loading"></i>
+    <span *ngIf="!loading">  
+      <ng-content></ng-content>
+    </span>
+    <span *ngIf="loading">{{loadingText}}</span>
+  </button>

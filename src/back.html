@@ -1,0 +1,259 @@
+<div class="header bg-gradient-danger pb-8 pt-6">
+  <div class="container-fluid">
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Person Information header -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="person-brief-container d-flex align-items-center">
+                <div class="person-avatar mr-4">
+                  <ngx-avatar name="Sagar Mahajan" size="100" class="mr-2"></ngx-avatar>
+                </div>
+                <div class="personal-info flex-grow-1">
+                  <div class="name">
+                    <h3>Sagar Mahajan</h3>
+                  </div>
+                  <span class="d-block text-sm">Male, 03 Aug 1986</span>
+                  <span class="d-block text-sm">sagar@angularminds.com, +1 (256) 434 3452</span>
+                  <div class="social-media mt-3">
+                    <div class="mr-2 d-inline-block"><a href="https://insureco.com"><i style="font-size: 20px;"
+                          class="fas fa-globe"></i></a>
+                    </div>
+                    <div class="mr-2 d-inline-block"><a href="https://insureco.com">
+                        <i style="font-size: 20px;" class="fab fa-facebook-square"></i></a></div>
+                    <div class="mr-2 d-inline-block"><a href="https://insureco.com"><i style="font-size: 20px;"
+                          class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="mr-2 d-inline-block"><a href="https://insureco.com"><i style="font-size: 20px;"
+                          class="fab fa-linkedin"></i></a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="address-info d-flex">
+                  <div class="physical address text-sm mr-4">
+                    <div class="font-weight-bold text-muted">Physical address:</div>
+                    2535 Kettner Blvd,<br />
+                    #3A2, <br />
+                    San Diego, CA 92101, USA
+                  </div>
+                  <div class="mailing address text-sm mr-2">
+                    <div class="font-weight-bold text-muted">Mailing address:</div>
+                    2535 Kettner Blvd,<br />
+                    #3A2, <br />
+                    San Diego, CA 92101, USA
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <hr>
+            </div>
+          </div>
+          <!-- <div class="tabbable-panel my-4">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li [ngClass]="{'active': isGlc}">
+                  <a href="javascript:;" (click)="isGlc=true">
+                    <h3>Green light checks</h3>
+                  </a>
+                </li>
+                <li [ngClass]="{'active': !isGlc}">
+                  <a href="javascript:;" (click)="isGlc=false">
+                    <h3>Notes</h3>
+                  </a>
+                </li>
+              </ul>
+              <div class="tab-content pt-4">
+                <div class="tab-pane active mt-4" *ngIf="isGlc then ngt_glc; else ngt_notes" >
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #ngt_glc>
+   <!-- Background checks -->
+   <div class="timeline timeline-one-side" data-timeline-content="axis"
+   data-timeline-axis-style="dashed">
+   <button class="btn btn-lg btn-primary">
+     Request background check
+   </button>
+
+   <div class="timeline-block">
+     <span class="timeline-step badge-info">
+       <i class="ni ni-bell-55"></i>
+     </span>
+     <div class="timeline-content">
+       <small class="font-weight-bold">Background check, </small> <small
+         class="text-muted font-weight-bold">Requested on 10 Aug 2019, 10:30 AM</small>
+       <p class="text-sm mt-1 mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis
+         natoque
+         penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+       <div class="mt-3">
+         <small class="text-muted font-weight-bold">Documents verified: </small>
+         <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Pan card</span></a>
+         <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Aadhar
+             card</span></a>
+         <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Social
+             Security</span></a>
+
+       </div>
+       <div class="mt-3">
+         <span class="text-primary text-sm font-weight-bold">
+           <i class="far fa-clock"></i> Pending</span>
+       </div>
+       <div class="mt-3">
+         <span class="text-warning text-sm font-weight-bold">
+           <i class="fas fa-search"></i> In-Review</span>
+       </div>
+       <div class="mt-3">
+         <span class="text-success text-sm font-weight-bold">
+           <i class="far fa-check-circle"></i> Completed</span>
+       </div>
+
+     </div>
+   </div>
+   <div class="timeline-block">
+      <span class="timeline-step badge-info">
+        <i class="ni ni-bell-55"></i>
+      </span>
+      <div class="timeline-content">
+        <small class="font-weight-bold">Background check, </small> <small
+          class="text-muted font-weight-bold">Requested on 10 Aug 2019, 10:30 AM</small>
+        <p class="text-sm mt-1 mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis
+          natoque
+          penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+        <div class="mt-3">
+          <small class="text-muted font-weight-bold">Documents verified: </small>
+          <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Pan card</span></a>
+          <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Aadhar
+              card</span></a>
+          <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Social
+              Security</span></a>
+ 
+        </div>
+        <div class="mt-3">
+          <span class="text-primary text-sm font-weight-bold">
+            <i class="far fa-clock"></i> Pending</span>
+        </div>
+        <div class="mt-3">
+          <span class="text-warning text-sm font-weight-bold">
+            <i class="fas fa-search"></i> In-Review</span>
+        </div>
+        <div class="mt-3">
+          <span class="text-success text-sm font-weight-bold">
+            <i class="far fa-check-circle"></i> Completed</span>
+        </div>
+ 
+      </div>
+    </div>
+    <div class="timeline-block">
+        <span class="timeline-step badge-info">
+          <i class="ni ni-bell-55"></i>
+        </span>
+        <div class="timeline-content">
+          <small class="font-weight-bold">Background check, </small> <small
+            class="text-muted font-weight-bold">Requested on 10 Aug 2019, 10:30 AM</small>
+          <p class="text-sm mt-1 mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis
+            natoque
+            penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+          <div class="mt-3">
+            <small class="text-muted font-weight-bold">Documents verified: </small>
+            <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Pan card</span></a>
+            <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Aadhar
+                card</span></a>
+            <a href="javascript:;"><span class="badge badge-pill badge-primary ml-2">Social
+                Security</span></a>
+   
+          </div>
+          <div class="mt-3">
+            <span class="text-primary text-sm font-weight-bold">
+              <i class="far fa-clock"></i> Pending</span>
+          </div>
+          <div class="mt-3">
+            <span class="text-warning text-sm font-weight-bold">
+              <i class="fas fa-search"></i> In-Review</span>
+          </div>
+          <div class="mt-3">
+            <span class="text-success text-sm font-weight-bold">
+              <i class="far fa-check-circle"></i> Completed</span>
+          </div>
+   
+        </div>
+      </div>
+ </div>
+</ng-template>
+
+
+<ng-template #ngt_notes>
+    <!-- Notes -->
+    <div class="notes-container">
+        <div class="row">
+          <div class="col-lg-6">
+            <form>
+              <div class="form-group">
+                <label>Add note</label>
+                <textarea class="form-control" placeholder="Write a message here" rows="4"></textarea>
+                <div class="invalid-feedback">
+                  Enter message
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button type="button" class="btn btn-sm btn-primary">
+                  Save note
+                </button>
+              </div>
+
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="card bg-secondary shadow mb-3">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <ngx-avatar name="Pradip waghmare" size="30" class="mr-2"></ngx-avatar>
+                  <span>Pradip Waghmare</span>
+                </div>
+                <small>Hi, @markterrancelim . Thank you for using our product. You need to use @Input and
+                  @Output to send data between components</small>
+                <div class="text-right">
+                  <small class="text-muted">~ 10 Aug 2019, 10:20 PM</small>
+                </div>
+              </div>
+            </div>
+            <div class="card bg-secondary shadow mb-3">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <ngx-avatar name="Sagar Mahajan" size="30" class="mr-2"></ngx-avatar>
+                  <span>
+                    Sagar Mahajan
+                  </span>
+                </div>
+                <small>Angular Bootstrap validation is set of validators which can be used on various form
+                  inputs to provide valuable and actionable feedback to users.</small>
+                <div class="text-right">
+                  <small class="text-muted">~ 10 Aug 2019, 10:20 PM</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</ng-template>
+
+{{data | json}}

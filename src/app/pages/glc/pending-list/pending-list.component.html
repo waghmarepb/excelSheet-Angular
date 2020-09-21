@@ -1,0 +1,93 @@
+<div class="header bg-gradient-danger pb-8 pt-6">
+  <div class="container-fluid">
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Pending Checks</h3>
+            </div>
+            <div class="col-4 text-right">
+              <!-- <a href="javascript:;" class="btn btn-sm btn-primary" [routerLink]="['/people/add']">Add Person</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Requested by</th>
+                <th scope="col">Type</th>
+                <!-- <th scope="col">Phone</th> -->
+                <th scope="col">Requested on</th>
+                <th scope="col">Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngIf="data !=null;else loading">
+              <tr *ngIf="data.docs.length == 0;else dataDocs">
+                <td colspan="4">No records</td>
+              </tr>
+              <tr *ngFor="let check of data.docs | paginate: { itemsPerPage: 10, currentPage: param.page } , index as i" #dataDocs>
+                <td scope="row">
+                  <div class="d-flex align-items-center">
+                    <ngx-avatar name="{{check.person.firstName}} {{check.person.lastName}}" size="30" class="mr-2">
+                    </ngx-avatar>
+                    <a [routerLink]="[ '/glc/details/'+check._id ]"><span>{{check.person.firstName}}
+                        {{check.person.lastName}}</span></a>
+                  </div>
+                </td>
+                <td>
+                  {{check.user.firstName}}
+                  {{check.user.lastName}}
+                </td>
+                <td>
+                  {{check.type}}
+                </td>
+                <!-- <td>
+                  {{check.person.phone}}
+                </td> -->
+                <td>
+                  {{check.createdAt |  date: 'dd MMM y, h:mm a'}}
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4" *ngIf="'Pending' == check.status;else InReview">
+                    <i class="bg-warning"></i> Pending </span>
+                  <ng-template #InReview><span class="badge badge-dot mr-4">
+                      <i class="bg-info"></i> In-Review </span></ng-template>
+
+                </td>
+                <td class="text-right">
+                  <button class="btn btn-neutral btn-sm" type="button"
+                    [routerLink]="[ '/glc/details/'+check._id ]">Details</button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <tr>
+    <td rowspan="4">
+      <i class="fas fa-circle-notch fa-spin"></i> Loading</td>
+  </tr>
+</ng-template>

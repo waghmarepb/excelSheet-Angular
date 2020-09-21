@@ -1,0 +1,10 @@
+<div class="row d-flex align-items-center">
+
+  <div class="col-12 form-group">
+    <label *ngIf="!!fileLabel">{{fileLabel}}</label>
+    <input type="file" class="form-control" (change)="onFileUpload($event.target.files)" [accept]=acceptFileTypes [multiple] = multiple>
+
+    <div class="badge badge-info mt-3" *ngIf="uploading"><i class="fas fa-circle-notch fa-spin"></i>
+      Uploading</div>
+  </div>
+</div>

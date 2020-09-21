@@ -1,0 +1,87 @@
+<div class="header bg-gradient-danger pb-8 pt-6">
+  <div class="container-fluid">
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">User</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="javascript:;" class="btn btn-sm btn-primary" [routerLink]="['/users/add']">Add User</a>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Created on</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngIf="users !=null;else loading">
+              <tr *ngIf="users.length==0 ;else userData">
+                <td colspan="6">No records</td>
+              </tr>
+              <tr *ngFor='let user of users  | paginate: { itemsPerPage: 10, currentPage: param.page }' #userData>
+                <td scope="row">
+                  <div class="d-flex align-items-center">
+                    <ngx-avatar name="{{user.firstName + ' ' + user.lastName}}" size="30" class="mr-2"></ngx-avatar>
+                    <a [routerLink]="['/users/edit',user._id]"><span>{{user.firstName + ' ' + user.lastName}}</span></a>
+                  </div>
+                </td>
+                <td>
+                  {{user.email}}
+                </td>
+                <td *ngIf="!(user.admin)">
+                  User
+                </td>
+                <td *ngIf="(user.admin)">
+                  Admin
+                </td>
+                <td>
+                  {{user.createdAt| date:'dd MMM y,  h:mm a' }}
+                </td>
+                <td>
+                  {{user.status}}
+                  <!-- <span class="badge badge-dot mr-4"><i class="bg-success"></i> Active </span> -->
+                </td>
+                <td class="text-right">
+                  <!-- <button class="btn btn-neutral btn-sm" [routerLink]="['/users/details']" routerLinkActive="router-link-active"  type="button">Details</button> -->
+                  <button class="btn btn-neutral btn-sm" [routerLink]="['/users/edit',user._id]"
+                    type="button">Edit</button>
+                  <!-- <button class="btn btn-neutral btn-sm" (click)=deleteUser(user._id) type="button">Remove</button> -->
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <tr>
+    <td rowspan="6">
+      <i class="fas fa-circle-notch fa-spin"></i> Loading</td>
+  </tr>
+</ng-template>

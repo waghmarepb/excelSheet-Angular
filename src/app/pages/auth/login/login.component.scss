@@ -1,0 +1,30 @@
+// .alert {
+//     margin-bottom: 1px;
+//     height: 25px;
+//     line-height:25px;
+//     padding:0px 15px;
+
+//   }
+  .alert {
+    margin-bottom: 1px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0px 15px;
+    width: 200px;
+  }
+
+  .form-group.is-invalid {
+    > .form-control{
+      border: 1px solid #fb6340;
+    }
+    .input-group {
+      border: 1px solid #fb6340;
+    }
+    .invalid-feedback {
+      display: block;
+    }
+  }
+
+  .ng-valid~.invalid-feedback{
+    display: none;
+  }

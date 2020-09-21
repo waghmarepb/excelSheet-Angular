@@ -1,0 +1,211 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="min-height:0px; background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row" *ngIf="userData">
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+              <a href="javascript:void(0)">
+                <img [src]="profilPicUrl" class="rounded-circle" *ngIf="userData.picture">
+                <ngx-avatar name="{{userData.firstName + ' ' + userData.lastName}}" *ngIf="!userData.picture"></ngx-avatar>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-max" *ngIf="userData">
+          <div class="text-center">
+            <h3>
+              {{userData.firstName}} {{userData.lastName}}
+              <!-- <span class="font-weight-light">{{userData.gender | titlecase}}, {{age}}</span> -->
+            </h3>
+
+            <!-- <div class="h5 font-weight-300">
+              <i class="ni location_pin mr-2"></i>{{userData.city}}, {{userData.state}}, {{userData.country}}City,
+              Maharashtrra, India
+            </div> -->
+            <div class="h5 font-weight-300">
+              <i class="ni location_pin mr-2"></i>{{userData.gender | titlecase}}
+              <!-- {{age}} -->
+            </div>
+
+            <div class="h5 mt-4">
+              <i class="ni business_briefcase-24 mr-2"></i>{{userData.email}},{{userData.phone}}
+            </div>
+            <div class="social-media mt-3" >
+              <div class="mr-2 d-inline-block" *ngIf="userData.website"><a href="{{userData.website}}" target="_blank">
+                  <i style="font-size: 20px;" class="fas fa-globe"></i></a>
+              </div>
+              <div class="mr-2 d-inline-block" *ngIf="userData.facebook"><a href="{{userData.facebook}}" target="_blank">
+                  <i style="font-size: 20px;" class="fab fa-facebook-square"></i></a>
+              </div>
+              <div class="mr-2 d-inline-block" *ngIf="userData.twitter"><a href="{{userData.twitter}}" target="_blank">
+                  <i style="font-size: 20px;" class="fab fa-twitter"></i></a>
+              </div>
+              <div class="mr-2 d-inline-block" *ngIf="userData.linkedin"><a href="{{userData.linkedin}}" target="_blank">
+                  <i style="font-size: 20px;" class="fab fa-linkedin"></i></a>
+              </div>
+              <div class="mr-2 d-inline-block" *ngIf="userData.google"><a href="{{userData.google}}" target="_blank">
+                <i style="font-size: 20px;" class="fab fa-google"></i></a>
+            </div>
+            <div class="mr-2 d-inline-block" *ngIf="userData.github"><a href="{{userData.github}}" target="_blank">
+              <i style="font-size: 20px;" class="fab fa-github"></i></a>
+          </div>
+          <div class="mr-2 d-inline-block" *ngIf="userData.vk"><a href="{{userData.vk}}" target="_blank">
+            <i style="font-size: 20px;" class="fab fa-vk"></i></a>
+        </div>
+            </div>
+            <hr class="my-4" />
+            <div>
+              <h3 class="mb-3">Change your profile picture</h3>
+              <app-file-upload (fileUploaded)=setProfilePic($event) [uploadUrl]='uploadUrl'
+                [acceptFileTypes]="'.jpg, .jpeg'"></app-file-upload>
+              <button class="btn btn-primary mt-3" *ngIf="uploadButton" (click)="uploadPicture()">Save profile picture</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">My information</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <form [formGroup]="userRegister" (ngSubmit)="updateProfile()">
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">First name</label>
+                    <input type="text" id="input-first-name" class="form-control form-control-alternative"
+                      formControlName="firstName" placeholder="First name">
+
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Last name</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      formControlName="lastName" placeholder="Last name">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email</label>
+                    <input id="input-email" class="form-control form-control-alternative" placeholder="Email"
+                      formControlName="email" type="email">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-phone">Phone</label>
+                    <input type="number" id="input-phone" class="form-control form-control-alternative"
+                      placeholder="Phone" formControlName="phone">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="inputAddress" class="form-control-label">Gender</label>
+                    <div class="form-row">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="male" formControlName="gender"
+                          name="gender" value="male">
+                        <label class="custom-control-label" for="male">Male</label>
+                      </div>
+
+                      <div class="custom-control custom-radio ml-5">
+                        <input type="radio" class="custom-control-input" id="female" formControlName="gender"
+                          name="gender" value="female">
+                        <label class="custom-control-label" for="female">Female</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Social (Optional)</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="website">Website</label>
+                    <input type="text" id="website" class="form-control form-control-alternative"
+                      formControlName="website" placeholder="Website">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="facebook">Facebook</label>
+                    <input type="text" id="facebook" class="form-control form-control-alternative"
+                      formControlName="facebook" placeholder="Facebook">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="twitter">Twitter</label>
+                    <input type="text" id="twitter" class="form-control form-control-alternative"
+                      formControlName="twitter" placeholder="Twitter">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="google">Google</label>
+                    <input type="text" id="google" class="form-control form-control-alternative"
+                      formControlName="google" placeholder="Google">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="vk">VK</label>
+                    <input type="text" id="vk" class="form-control form-control-alternative" formControlName="vk"
+                      placeholder="VK">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="github">Github</label>
+                    <input type="text" id="github" class="form-control form-control-alternative"
+                      formControlName="github" placeholder="Github">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <button class="btn btn-primary" type="submit">Save information</button>
+                  <button class="btn btn-link text-default" type="button">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

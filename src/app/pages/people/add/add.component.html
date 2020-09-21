@@ -1,0 +1,295 @@
+<div class="header pb-8 pt-6 d-flex align-items-center">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Add A Person To Your GL People List</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="javascript:;" class="btn btn-link text-primary" [routerLink]="['/people/list']">Back</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]='peopleRegister' (ngSubmit)="onSubmit()">
+            <h6 class="heading-small text-muted mb-4">Person Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.firstName}">
+                    <label class="form-control-label" for="input-first-name">First name</label>
+                    <input type="text" class="form-control form-control-alternative" formControlName="firstName"
+                      placeholder="First Name">
+                    <div class="invalid-feedback">
+                      {{formError.firstName}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-middle-name">Middle name</label>
+                    <input type="text" id="input-first-name" class="form-control form-control-alternative"
+                      formControlName="middleName" placeholder="Middle name">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.lastName}">
+                    <label class="form-control-label" for="input-last-name">Last name</label>
+                    <input type="text" class="form-control form-control-alternative" formControlName="lastName"
+                      placeholder="Last Name">
+                    <div class="invalid-feedback">
+                      {{formError.lastName}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.gender}">
+                    <label class="form-control-label" for="input-address">Gender</label>
+                    <div class="row">
+                      <div class="custom-control custom-radio ml-3 mb-3">
+
+                        <input class="custom-control-input" id="customRadio5" type="radio" formControlName="gender"
+                          value="male">
+                        <label class="custom-control-label" for="customRadio5">Male</label>
+                      </div>
+
+                      <div class="custom-control custom-radio ml-4 mb-3">
+                        <input class="custom-control-input" id="customRadio6" formControlName="gender" type="radio"
+                          value="female">
+                        <label class="custom-control-label" for="customRadio6">Female</label>
+                      </div>
+                      <div class="invalid-feedback">
+                        {{formError.gender}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.dob}">
+                    <label class="form-control-label" for="input-dob">Date of birth</label>
+                    <!-- <input type="date" id="input-username" class="form-control form-control-alternative"
+                      formControlName="dob" placeholder="Date of birth" required> -->
+                    <input type="text" class="form-control form-control-alternative" mask="0000-09-09"
+                      formControlName="dob" placeholder="Date of birth (YYYY-MM-DD)" />
+                    <div class="invalid-feedback">
+                      {{formError.dob}}
+                    </div>
+                    <!-- <input type="text" class="form-control form-control-alternative"
+                     (click)="d.toggle()" required  formControlName="dob" placeholder="Date of birth" ngbDatepicker #d="ngbDatepicker"/> -->
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.email}">
+                    <label class="form-control-label" for="input-address">Email</label>
+                    <input id="input-address" class="form-control form-control-alternative" placeholder="Email"
+                      formControlName="email" type="email">
+                    <div class="invalid-feedback">
+                      {{formError.email}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.phone}">
+                    <label class="form-control-label" for="input-phone">Phone</label>
+                    <input type="text" id="input-phone" class="form-control form-control-alternative"
+                      placeholder="Phone" formControlName="phone" mask="(000) 000-0000" required>
+                    <div class="invalid-feedback">
+                      {{formError.phone}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Physical address</h6>
+            <div class="pl-lg-4" formGroupName="physicalAddress">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address-line-1">Address line 1</label>
+                    <input id="input-address-line-1" class="form-control form-control-alternative"
+                      formControlName="line1" placeholder="Address line 1" type="text">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address-line-2">Address line 2</label>
+                    <input id="input-address-line-2" class="form-control form-control-alternative"
+                      formControlName="line2" placeholder="Address line 2" type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">City</label>
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City"
+                      formControlName="city" value="">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-state">State</label>
+                    <input type="text" id="input-state" class="form-control form-control-alternative"
+                      formControlName="state" placeholder="State" value="">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-postal-code">Zipcode</label>
+                    <input type="text" id="input-phone" class="form-control form-control-alternative" mask="00000"
+                      formControlName="zipcode" maxlength=5 placeholder="Postal code">
+
+                    <!-- <div
+                      *ngIf="peopleRegister.get('zipcode').invalid && (peopleRegister.get('zipcode').dirty || peopleRegister.get('zipcode').touched)"
+                      class="text-danger">
+                      <div *ngIf="peopleRegister.get('zipcode').errors.">
+                        Phone no is required.
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h6 class="heading-small text-muted mb-4">Mailing address</h6>
+            <div class="pl-lg-4">
+              <div class="row d-flex form-group col-md-12">
+                <label class="form-control-label" for="input-address">Same as Physical address </label>
+                <label class="custom-toggle ml-3">
+                  <input type="checkbox" formControlName="admin" (change)="mailAddress($event)">
+                  <span class="custom-toggle-slider rounded-circle"></span>
+                </label>
+
+              </div>
+            </div>
+
+            <div class="pl-lg-4" formGroupName="mailingAddress">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address-line-1">Address line 1</label>
+                    <input id="input-address-line-1" class="form-control form-control-alternative"
+                      formControlName="line1" placeholder="Address line 1" type="text">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address-line-2">Address line 2</label>
+                    <input id="input-address-line-2" class="form-control form-control-alternative"
+                      formControlName="line2" placeholder="Address line 2" type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">City</label>
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City"
+                      formControlName="city" value="">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-state">State</label>
+                    <input type="text" id="input-state" class="form-control form-control-alternative"
+                      formControlName="state" placeholder="State" value="">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-postal-code">Zipcode</label>
+                    <input type="text" id="input-postal-code" class="form-control form-control-alternative"
+                      onkeyup="this.value=this.value.replace(/[^\d]/,'')" formControlName="zipcode"
+                      placeholder="Postal code" maxlength=5>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Social (Optional)</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.website}">
+                    <label class="form-control-label" for="website">Website</label>
+                    <input type="text" id="website" class="form-control form-control-alternative"
+                      formControlName="website" placeholder="https://www.example.com">
+                    <div class="invalid-feedback">
+                      {{formError.website}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.facebook}">
+                    <label class="form-control-label" for="facebook">Facebook</label>
+                    <input type="text" id="facebook" class="form-control form-control-alternative"
+                      formControlName="facebook" placeholder="https://www.facebook.com/profile">
+                    <div class="invalid-feedback">
+                      {{formError.facebook}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.twitter}">
+                    <label class="form-control-label" for="twitter">Twitter</label>
+                    <input type="text" id="twitter" class="form-control form-control-alternative"
+                      formControlName="twitter" placeholder="https://www.twitter.com/example">
+                    <div class="invalid-feedback">
+                      {{formError.twitter}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" [ngClass]="{'is-invalid':formError.linkedin}">
+                    <label class="form-control-label" for="linkedin">Linkedin</label>
+                    <input type="text" id="linkedin" class="form-control form-control-alternative"
+                      formControlName="linkedin" placeholder="https://www.linkedin.com/in.example">
+                    <div class="invalid-feedback">
+                      {{formError.linkedin}}
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <app-button [btnType]="'submit'" [loading]="loading">
+                    Create account
+                  </app-button>
+                  <button class="btn btn-link text-default" [routerLink]="['/people/list']"
+                    routerLinkActive="router-link-active" type="button">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

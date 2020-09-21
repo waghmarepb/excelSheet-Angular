@@ -1,0 +1,196 @@
+<div class="header bg-gradient-danger pb-8 pt-6">
+    <div class="container-fluid">
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-right">
+                        <a class="btn btn-link text-primary" [routerLink]="['/people/list']" routerLinkActive="router-link-active">
+                            << Back To People List</a>
+                    </div>
+                    <!-- Person Information header -->
+                    <div class="row" *ngIf="data">
+                        <div class="col-md-12">
+                            <div class="person-brief-container d-flex align-items-center">
+                                <div class="person-avatar mr-4">
+                                    <ngx-avatar name="{{data.people.firstName + ' ' + data.people.lastName}}" size="100" class="mr-2"></ngx-avatar>
+                                </div>
+                                <div class="personal-info flex-grow-1">
+                                    <div class="name">
+                                        <h3>{{data.people.firstName + ' ' + data.people.lastName}}</h3>
+                                    </div>
+                                    <span class="d-block text-sm">{{data.people.gender | titlecase}}, {{data.people.dob | date}}</span>
+                                    <span class="d-block text-sm">{{data.people.email}}, {{data.people.phone}}</span>
+                                    <div class="social-media mt-3">
+                                        <div class="mr-2 d-inline-block" *ngIf="data.people.website"><a target="_blank" href={{data.people.website}}><i style="font-size: 20px;"
+                                class="fas fa-globe"></i></a>
+                                        </div>
+                                        <div class="mr-2 d-inline-block" *ngIf="data.people.facebook">
+                                            <a target="_blank" href={{data.people.facebook}}>
+                                                <i style="font-size: 20px;" class="fab fa-facebook-square"></i></a>
+                                        </div>
+                                        <div class="mr-2 d-inline-block" *ngIf="data.people.twitter"><a target="_blank" href={{data.people.twitter}}><i style="font-size: 20px;"
+                                class="fab fa-twitter"></i></a>
+                                        </div>
+                                        <div class="mr-2 d-inline-block" *ngIf="data.people.linkedin"><a target="_blank" href={{data.people.linkedin}}><i style="font-size: 20px;"
+                                class="fab fa-linkedin"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="address-info d-flex">
+                                    <div class="physical address text-sm mr-4">
+                                        <div class="font-weight-bold text-muted">Physical address:</div>
+                                        <small>
+                            {{data.people.physicalAddress.line1}} {{data.people.physicalAddress.line2}}<br />
+                            {{data.people.physicalAddress.city}}, {{data.people.physicalAddress.state}}<br />
+                            {{data.people.physicalAddress.zipcode}}
+                          </small>
+                                    </div>
+                                    <div class="mailing address text-sm mr-2">
+                                        <div class="font-weight-bold text-muted">Mailing address:</div>
+                                        <small>
+                            {{data.people.mailingAddress.line1 || data.people.physicalAddress.line1}}
+                            {{data.people.mailingAddress.line2 || data.people.physicalAddress.line2}}<br />
+                            {{data.people.mailingAddress.city || data.people.physicalAddress.city}},
+                            {{data.people.mailingAddress.state || data.people.physicalAddress.state}}<br />
+                            {{data.people.mailingAddress.zipcode || data.people.physicalAddress.zipcode}}
+                          </small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                        </div>
+                    </div>
+                    <div class="tabbable-panel my-4">
+                        <div class="tabbable-line">
+                            <ul class="nav nav-tabs ">
+                                <li [ngClass]="{'active': !isGlc}">
+                                    <a href="javascript:;" (click)="isGlc=false">
+                                        <h3>Green light checks</h3>
+                                    </a>
+                                </li>
+                                <li [ngClass]="{'active': isGlc}">
+                                    <a href="javascript:;" (click)="isGlc=true">
+                                        <h3>Notes</h3>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content pt-4">
+                                <div class="tab-pane active mt-4" *ngIf="isGlc then ngt_notes; else ngt_glc ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #ngt_glc>
+    <!-- Background checks -->
+    <div class="row">
+        <div class="col-md-8" data-timeline-content="axis" data-timeline-axis-style="dashed">
+            <!-- <button (click)="requestGLC()" class="btn btn-lg btn-primary" *ngIf="!glcStatus">
+          Request background check
+        </button> -->
+            <app-button [btnType]="'submit'" *ngIf="!glcStatus" (click)="requestGLC()" [loading]="loading">
+                Request background check
+            </app-button>
+
+            <button disabled class="btn btn-lg btn-primary" *ngIf="glcStatus">
+          Your request is in process.
+        </button>
+            <div *ngIf="data">
+                <div class="glc-block card shadow mt-3" *ngFor="let glcData of data.GLC">
+                    <div class="glc-content card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="badge badge-info mr-2">GLC-{{glcData.referenceNo}}</label> Background check </div>
+                            <div class="col-6 text-right">
+                                <span class="text-primary text-sm font-weight-bold" *ngIf="glcData.status=='Pending'">
+                    <i class="far fa-clock"></i> Pending</span>
+                                <span class="text-warning text-sm font-weight-bold" *ngIf="glcData.status=='In-Review'">
+                    <i class="fas fa-search"></i> In-Review</span>
+                                <span class="text-success text-sm font-weight-bold" *ngIf="glcData.status=='Completed'">
+                    <i class="far fa-check-circle"></i> Completed</span>
+                            </div>
+                        </div>
+                        <hr class="my-2">
+                        <p class="mt-2 mb-0 text-sm">{{glcData.remark}}</p>
+                        <div class="mt-2">
+                            <span class="text-muted text-xs" *ngIf="glcData.docs.length > 0">
+                  <i class="fas fa-paperclip"></i> &nbsp; </span>
+
+                            <a href="{{doc.file}}" target="_blank" class="text-xs mr-2" *ngFor="let doc of glcData.docs">{{doc.name}}</a>
+                            <!-- <div class="btn-group mr-3 mt-2 " role="group" aria-label="Basic example" *ngFor="let doc of glcData.docs">
+                      <a href="{{doc.file}}" target="_blank" class="btn btn-sm btn-neutral">{{doc.name}}</a>
+                    </div> -->
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6 text-xs text-muted">Requested on {{glcData.createdAt | date:"MM/dd/yy" }}, {{glcData.createdAt | date:"HH:mm"}}</div>
+                            <div class="col-6 text-xs text-muted text-right">Last updated on {{glcData.createdAt | date:"MM/dd/yy" }}, {{glcData.createdAt | date:"HH:mm"}}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #ngt_notes>
+    <!-- Notes -->
+    <div class="notes-container">
+        <div class="row">
+            <div class="col-lg-6">
+                <form [formGroup]="notesForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label>Add note</label>
+                        <textarea class="form-control" formControlName="note" placeholder="Write a message here" rows="4"></textarea>
+                        <div class="invalid-feedback">
+                            Enter message
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <app-button [btnType]="'submit'" [loading]="loading">
+                            Save
+                        </app-button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card shadow mb-3" *ngFor="let peopleData of notes; index as i">
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center">
+                            <ngx-avatar name="{{peopleData.user.firstName + ' ' + peopleData.user.lastName}}" size="30" class="mr-2">
+                            </ngx-avatar>
+                            <span>{{peopleData.user.firstName + ' '+ peopleData.user.lastName}}</span>
+                        </div>
+                        <small>{{peopleData.note}}</small>
+                        <div class="text-right">
+                            <small class="text-muted">~ {{noteTime[i]}}</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>

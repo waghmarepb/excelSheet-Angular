@@ -1,0 +1,106 @@
+<div class="header bg-gradient-danger pb-8 pt-6">
+  <div class="container-fluid">
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">People</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="javascript:;" class="btn btn-sm btn-primary" [routerLink]="['/people/add']">Add Person</a>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngIf="allPeopelList != null;else loading">
+              <tr *ngIf="allPeopelList.length==0 ;else peopleData">
+                  <td colspan="6">No records</td>
+                </tr>
+              <tr *ngFor="let peopleList of allPeopelList | paginate: { itemsPerPage: 10, currentPage: param.page }" #peopleData>
+                <td scope="row">
+                  <div class="d-flex align-items-center">
+                    <ngx-avatar name="{{peopleList.firstName + ' ' + peopleList.lastName}}" size="30" class="mr-2">
+                    </ngx-avatar>
+                    <a [routerLink]="['/people/details', peopleList._id]"
+                      routerLinkActive="router-link-active"><span>{{peopleList.firstName+ ' '+ peopleList.lastName}}</span></a>
+                  </div>
+                </td>
+                <td>
+                  {{peopleList.gender | titlecase}}
+                </td>
+                <td>
+                  {{peopleList.email}}
+                </td>
+                <td>
+                  {{peopleList.phone}}
+                </td>
+                <td class="text-right">
+                  <button class="btn btn-neutral btn-sm" [routerLink]="['/people/details', peopleList._id]"
+                    type="button">Details</button>
+                  <button class="btn btn-neutral btn-sm" [routerLink]="['/people/edit', peopleList._id]"
+                    routerLinkActive="router-link-active" type="button">Edit</button>
+                  <button class="btn btn-neutral btn-sm" (click)="deleteperson(peopleList._id, classic2)">Remove</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <tr>
+      <td rowspan="5">
+          <i class="fas fa-circle-notch fa-spin"></i> Loading</td>
+  </tr>
+</ng-template>
+
+
+<ng-template #classic2 let-c="close" let-d="dismiss">
+    <div class="modal-content bg-gradient-danger text-white">
+      <div class="modal-header">
+        <h6 class="modal-title text-white" id="modal-title-notification">Your attention is required</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="py-3 text-center">
+          <i class="ni ni-bell-55 ni-3x"></i>
+          <h4 class="heading mt-4 text-white text-strong">ATTENTION!</h4>
+          <strong>Are you sure ! You want to delete this Record?.</strong>
+        </div>
+      </div>
+      <div class="modal-footer m-auto">
+        <button type="button" class="btn btn-white" (click)="deleteAlartResponce()" >Delete</button>
+        <button type="button" class="btn btn-white" (click)="modalRef.hide()" >Cancle</button>
+
+      </div>
+    </div>
+  </ng-template>

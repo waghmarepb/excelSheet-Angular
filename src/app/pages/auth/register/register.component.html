@@ -1,0 +1,126 @@
+<div class="header bg-gradient-danger py-7 py-lg-8">
+  <div class="container">
+    <div class="header-body text-center mb-7">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6">
+          <!-- <h1 class="text-white">Create your account now</h1>
+          <p class="text-lead text-white">
+            Insurance Compliance doesn't have to be complicated.
+          </p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="separator separator-bottom separator-skew zindex-100">
+    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+    </svg>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--8 pb-5">
+  <!-- Table -->
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card bg-secondary shadow border-0">
+        <!-- <div class="card-header bg-transparent pb-5">
+          <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
+          <div class="text-center">
+            <a href="javascript:void(0)" class="btn btn-neutral btn-icon mr-4">
+              <span class="btn-inner--icon"><img src="assets/img/icons/common/github.svg"></span>
+              <span class="btn-inner--text">Github</span>
+            </a>
+            <a href="javascript:void(0)" class="btn btn-neutral btn-icon">
+              <span class="btn-inner--icon"><img src="assets/img/icons/common/google.svg"></span>
+              <span class="btn-inner--text">Google</span>
+            </a>
+          </div>
+        </div>  -->
+        <div class="card-body px-lg-5 py-lg-5">
+          <div class="text-center">
+            <h1 class="">Create your account now</h1>
+            <p class="text-lead">
+              Insurance Compliance doesn't have to be complicated.
+            </p>
+          </div>
+
+          <form [formGroup]="registerForm" (ngSubmit)="submit()">
+            <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'is-invalid':formError.firstName}">
+                  <input type="text" class="form-control form-control-alternative" formControlName="firstName"
+                    placeholder="First Name">
+                  <div class="invalid-feedback">
+                    {{formError.firstName}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'is-invalid':formError.lastName}">
+                  <input type="text" class="form-control form-control-alternative" formControlName="lastName"
+                    placeholder="Last Name">
+                  <div class="invalid-feedback">
+                    {{formError.lastName}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{ 'is-invalid': formError.email }">
+              <div class="input-group input-group-alternative mb-0">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                </div>
+                <input class="form-control" placeholder="Email" type="email" formControlName="email"
+                >
+              </div>
+              <div class="invalid-feedback">
+                {{formError.email}}
+              </div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'is-invalid': formError.password }">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                </div>
+                <input class="form-control" placeholder="Password" type="password" formControlName="password"
+                >
+              </div>
+              <div class="invalid-feedback">
+                {{formError.password}}
+              </div>
+
+            </div>
+
+            <!-- <div class="row my-4">
+              <div class="col-12">
+                <div class="custom-control custom-control-alternative custom-checkbox">
+                  <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+ <label class="custom-control-label" for="customCheckRegister">
+                    <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                  </label>
+                </div>
+              </div>
+            </div> -->
+            <div class="text-center">
+                <app-button [btnType]="'submit'" [loading]="loading">
+                    Create account
+                  </app-button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6">
+        </div>
+        <div class="col-6 text-right">
+          <a href="javascript:void(0)" class="text-light" [routerLink]="['/auth/login']">
+            <h3 class="text-white">Go to Login</h3>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

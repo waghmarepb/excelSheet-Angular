@@ -1,0 +1,195 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row" *ngIf="userData">
+        <div class="col-xl-1 col-lg-2" *ngIf="user.admin"></div>
+        <div class="col-xl-3 col-lg-2" *ngIf="!user.admin"></div>
+        <div class="col-xl-3 col-lg-6" *ngIf="user.admin">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Customers
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">{{
+                    userData.count
+                  }}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2" *ngIf="userData.percentage[1] == true"><i class="fa fa-arrow-up"></i>
+                  {{ userData.percentage[0] }}%</span>
+                <span class="text-danger mr-2" *ngIf="userData.percentage[1] == false"><i class="fas fa-arrow-down"></i>
+                  {{ userData.percentage[0] }}%</span>
+                <span class="text-info mr-2" *ngIf="userData.percentage[1] == undefined"><i class="fa fa-minus"></i>
+                  0%</span>
+                <span class="text-nowrap">Since last week</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    List
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">{{
+                    glcData.count
+                  }}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                    <i class="fas fa-chart-pie"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2" *ngIf="glcData.percentage[1] == true"><i class="fa fa-arrow-up"></i>
+                  {{ glcData.percentage[0] }}%</span>
+                <span class="text-danger mr-2" *ngIf="glcData.percentage[1] == false"><i class="fas fa-arrow-down"></i>
+                  {{ glcData.percentage[0] }}%</span>
+                <span class="text-info mr-2" *ngIf="glcData.percentage[1] == undefined"><i class="fa fa-minus"></i>
+                  0%</span>
+                <span class="text-nowrap">Since last week</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6" *ngIf="user.admin">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Add New
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    {{
+                    peopleData.count
+                  }}
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <button class="btn btn-sm btn-primary" (click)="openModal(template)">Add New</button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #template>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" id="my-modal-title">Upload Excel File</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="!studentData">
+    <div id="my-modal-description">
+      <app-file-upload (fileUploaded)=setProfilePic($event) [uploadUrl]='uploadUrl'
+        [acceptFileTypes]="'.xls,.xlsx,.csv'">
+      </app-file-upload>
+    </div>
+    <div class="badge badge-info mt-3" *ngIf="uploading"><i class="fas fa-circle-notch fa-spin"></i>
+      Uploading</div>
+  </div>
+
+  <div class="model-body" *ngIf="studentData">
+    <div class="container-fluid mt--7">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">New Student List</h3>
+                </div>
+
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Sr.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="studentData != null;else loading">
+                  <tr *ngIf="studentData.length==0 ;else people">
+                    <td colspan="6">No records</td>
+                  </tr>
+                  <tr *ngFor="let student of studentData | paginate: { itemsPerPage: 10, currentPage: param.page }"
+                    #people>
+                    <td>
+                      {{student.no}}
+                    </td>
+                    <td scope="row">
+                      <div class="d-flex align-items-center">
+                        <ngx-avatar name="{{student.name}}" size="30" class="mr-2">
+                        </ngx-avatar>
+                        <a><span>{{student.name}}</span></a>
+                      </div>
+                    </td>
+
+                    <td>
+                      {{student.email}}
+                    </td>
+                    <td>
+                      {{student.password}}
+                    </td>
+                    <td class="text-right">
+                      <!-- <button class="btn btn-neutral btn-sm" [routerLink]="['/people/details', peopleList._id]"
+                        type="button">Details</button>
+                      <button class="btn btn-neutral btn-sm" [routerLink]="['/people/edit', peopleList._id]"
+                        routerLinkActive="router-link-active" type="button">Edit</button>
+                      <button class="btn btn-neutral btn-sm"
+                        (click)="deleteperson(peopleList._id, classic2)">Remove</button> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+                  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-neutral btn-sm" (click)="confirm()"> Save</button>
+        <button class="btn btn-neutral btn-sm" (click)="decline()"> cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
